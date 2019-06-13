@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@maz/clipboard": [
+        "dist/maz/clipboard"
+      ],
+      "@maz/clipboard/*": [
+        "dist/maz/clipboard/*"
+      ]
+    }
   }
 }
