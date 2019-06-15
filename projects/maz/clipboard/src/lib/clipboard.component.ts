@@ -1,19 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'lib-clipboard',
-  template: `
-    <p>
-      clipboard works!
-    </p>
-  `,
-  styles: []
+  selector: 'maz-clipboard',
+  templateUrl: './clipboard.component.html',
+  styleUrls: ['./clipboard.component.scss']
 })
-export class ClipboardComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class ClipboardComponent {
+  @Input() text: string;
 }

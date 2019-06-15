@@ -1,11 +1,17 @@
+import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
-import { Directive, ElementRef, HostListener, Inject } from '@angular/core';
+import { Directive, ElementRef, HostListener, Inject, Input } from '@angular/core';
+
+import { ClipboardComponent } from './clipboard.component';
 
 @Directive({
   selector: '[mazClipboard]'
 })
 export class ClipboardDirective {
-  constructor(private el: ElementRef, @Inject(DOCUMENT) private document: Document) {}
+  @Input('mazClipboard') text: string;
+
+  constructor(@Inject(DOCUMENT) private document: Document, private el: ElementRef, private overlay: Overlay) {}
 
   @HostListener('click')
   copy() {
@@ -22,6 +28,30 @@ export class ClipboardDirective {
       input.select();
     }
     document.execCommand('copy');
+
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.el.nativeElement)
+      .withPositions([
+        {
+          originX: 'end',
+          originY: 'top',
+          overlayX: 'end',
+          overlayY: 'bottom'
+        }
+      ]);
+
+    const overlayRef = this.overlay.create(
+      new OverlayConfig({
+        hasBackdrop: false,
+        scrollStrategy: this.overlay.scrollStrategies.close(),
+        positionStrategy
+      })
+    );
+
+    overlayRef.attach(new ComponentPortal(ClipboardComponent));
+
+    setTimeout(() => overlayRef.dispose(), 2000);
 
     if (input) {
       this.document.body.removeChild(input);
