@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { ClipboardComponent } from './clipboard.component';
 import { ClipboardDirective } from './clipboard.directive';
+import { ClipboardService } from './clipboard.service';
 
 @NgModule({
   declarations: [ClipboardComponent, ClipboardDirective],
+  providers: [ClipboardService],
   entryComponents: [ClipboardComponent],
   imports: [OverlayModule],
-  exports: [ClipboardComponent, ClipboardDirective]
+  exports: [ClipboardDirective]
 })
 export class ClipboardModule {}
