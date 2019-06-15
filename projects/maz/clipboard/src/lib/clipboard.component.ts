@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, InjectionToken } from '@angular/core';
+
+export const CONTAINER_DATA: InjectionToken<string> = new InjectionToken<string>('CONTAINER_DATA');
 
 @Component({
   selector: 'maz-clipboard',
@@ -6,5 +8,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./clipboard.component.scss']
 })
 export class ClipboardComponent {
-  @Input() text: string;
+  constructor(@Inject(CONTAINER_DATA) public text: string) {}
 }

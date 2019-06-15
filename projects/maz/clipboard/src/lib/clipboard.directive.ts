@@ -1,9 +1,9 @@
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
+import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
-import { Directive, ElementRef, HostListener, Inject, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Inject, Injector, Input } from '@angular/core';
 
-import { ClipboardComponent } from './clipboard.component';
+import { ClipboardComponent, CONTAINER_DATA } from './clipboard.component';
 
 @Directive({
   selector: '[mazClipboard]'
@@ -11,7 +11,7 @@ import { ClipboardComponent } from './clipboard.component';
 export class ClipboardDirective {
   @Input('mazClipboard') text: string;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private el: ElementRef, private overlay: Overlay) {}
+  constructor(@Inject(DOCUMENT) private document: Document, private el: ElementRef, private overlay: Overlay, private injector: Injector) {}
 
   @HostListener('click')
   copy() {
@@ -49,7 +49,7 @@ export class ClipboardDirective {
       })
     );
 
-    overlayRef.attach(new ComponentPortal(ClipboardComponent));
+    overlayRef.attach(new ComponentPortal(ClipboardComponent, null, this.createInjector(this.text)));
 
     setTimeout(() => overlayRef.dispose(), 2000);
 
@@ -57,5 +57,10 @@ export class ClipboardDirective {
       this.document.body.removeChild(input);
       input = undefined;
     }
+  }
+
+  private createInjector(text: string): PortalInjector {
+    const injectorTokens = new WeakMap([[CONTAINER_DATA, text]]);
+    return new PortalInjector(this.injector, injectorTokens);
   }
 }
