@@ -1,6 +1,6 @@
 import { Component, Inject, InjectionToken } from '@angular/core';
 
-export const CONTAINER_DATA: InjectionToken<string> = new InjectionToken<string>('CONTAINER_DATA');
+export const DONNEES: InjectionToken<string> = new InjectionToken<string>('DONNEES');
 
 @Component({
   selector: 'maz-clipboard',
@@ -8,5 +8,5 @@ export const CONTAINER_DATA: InjectionToken<string> = new InjectionToken<string>
   styleUrls: ['./clipboard.component.scss']
 })
 export class ClipboardComponent {
-  constructor(@Inject(CONTAINER_DATA) public text: string) {}
+  constructor(@Inject(DONNEES) public message: string) {}
 }

@@ -3,7 +3,7 @@ import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector } from '@angular/core';
 
-import { ClipboardComponent, CONTAINER_DATA } from './clipboard.component';
+import { ClipboardComponent, DONNEES } from './clipboard.component';
 
 @Injectable()
 export class ClipboardService {
@@ -101,7 +101,7 @@ export class ClipboardService {
    * @returns Un object contenant les informations à envoyer au composant
    */
   private creerInjector(message: string): PortalInjector {
-    const injectorTokens = new WeakMap([[CONTAINER_DATA, message]]);
+    const injectorTokens = new WeakMap([[DONNEES, message]]);
     return new PortalInjector(this.injector, injectorTokens);
   }
 }
