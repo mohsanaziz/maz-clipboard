@@ -59,7 +59,8 @@ export class ClipboardService {
   notifier(element: HTMLElement, message: string) {
     const overlayRef = this.creerOverlay(element);
 
-    overlayRef.attach(new ComponentPortal(ClipboardComponent, null, this.creerInjector(message)));
+    const componentRef = overlayRef.attach(new ComponentPortal(ClipboardComponent, null, this.creerInjector(message)));
+    componentRef.instance.etat = 'visible';
 
     setTimeout(() => overlayRef.dispose(), 2000);
   }

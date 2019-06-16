@@ -10,6 +10,9 @@ export class ClipboardDirective {
 
   constructor(private clipboardService: ClipboardService, private el: ElementRef) {}
 
+  /**
+   * Fonction permettant de copier le texte de l'élément dans le presse-papier lors d'un clique.
+   */
   @HostListener('click')
   copier() {
     let input: HTMLInputElement;
@@ -23,11 +26,11 @@ export class ClipboardDirective {
 
     this.clipboardService.copierPressePapier();
 
-    this.clipboardService.notifier(this.el.nativeElement, this.message);
-
     if (input) {
       this.clipboardService.supprimer(input);
       input = undefined;
     }
+
+    this.clipboardService.notifier(this.el.nativeElement, this.message);
   }
 }
