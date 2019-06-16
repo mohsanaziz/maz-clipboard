@@ -14,7 +14,7 @@ import { ClipboardService } from './clipboard.service';
   selector: '[mazClipboard]'
 })
 export class ClipboardDirective {
-  @Input('mazClipboard') config: ClipboardConfig;
+  @Input('mazClipboard') config: string | ClipboardConfig;
 
   constructor(private clipboardService: ClipboardService, private el: ElementRef) {}
 
@@ -39,10 +39,14 @@ export class ClipboardDirective {
       input = undefined;
     }
 
-    if (!this.config.duree) {
-      this.config.duree = 2;
+    let configuration: ClipboardConfig = { message: '', duree: 2 };
+
+    if (this.config instanceof Object) {
+      configuration = { ...configuration, ...this.config };
+    } else {
+      configuration.message = this.config;
     }
 
-    this.clipboardService.notifier(this.el.nativeElement, this.config);
+    this.clipboardService.notifier(this.el.nativeElement, configuration);
   }
 }
