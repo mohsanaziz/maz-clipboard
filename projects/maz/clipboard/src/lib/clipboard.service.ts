@@ -7,7 +7,7 @@ import { ClipboardComponent, DONNEES } from './clipboard.component';
 
 @Injectable()
 export class ClipboardService {
-  constructor(@Inject(DOCUMENT) private document: Document, private overlay: Overlay, private injector: Injector) {}
+  constructor(@Inject(DOCUMENT) private document: any, private overlay: Overlay, private injector: Injector) {}
 
   /**
    * Fonction permettant de vérifier si l'élément est un input ou un textarea.
