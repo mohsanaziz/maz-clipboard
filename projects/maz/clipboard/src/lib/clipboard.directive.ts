@@ -1,12 +1,20 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
+import { ClipboardConfig } from './clipboard.config';
 import { ClipboardService } from './clipboard.service';
 
+/**
+ * Directive permettant de copier dans le presse-papier.
+ *
+ * @example
+ * // 'config' doit être du type `ClipboardConfig`
+ * <button [mazClipboard]="config">Texte qui va être copié</button>
+ */
 @Directive({
   selector: '[mazClipboard]'
 })
 export class ClipboardDirective {
-  @Input('mazClipboard') message: string;
+  @Input('mazClipboard') config: ClipboardConfig;
 
   constructor(private clipboardService: ClipboardService, private el: ElementRef) {}
 
@@ -31,6 +39,10 @@ export class ClipboardDirective {
       input = undefined;
     }
 
-    this.clipboardService.notifier(this.el.nativeElement, this.message);
+    if (!this.config.duree) {
+      this.config.duree = 2;
+    }
+
+    this.clipboardService.notifier(this.el.nativeElement, this.config);
   }
 }

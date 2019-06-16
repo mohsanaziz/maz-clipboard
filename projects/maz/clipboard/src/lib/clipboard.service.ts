@@ -3,7 +3,9 @@ import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Injector } from '@angular/core';
 
+import { CLIPBOARDANIMATION } from './clipboard.animation';
 import { ClipboardComponent, DONNEES } from './clipboard.component';
+import { ClipboardConfig } from './clipboard.config';
 
 @Injectable()
 export class ClipboardService {
@@ -54,15 +56,15 @@ export class ClipboardService {
    * Fonction permettant d'afficher un message de notification.
    *
    * @param element L'élément HTML sur lequel doit être rataché la notification
-   * @param message Le message à afficher dans la notification
+   * @param config La configuration pour l'affichage
    */
-  notifier(element: HTMLElement, message: string) {
+  notifier(element: HTMLElement, config: ClipboardConfig) {
     const overlayRef = this.creerOverlay(element);
 
-    const componentRef = overlayRef.attach(new ComponentPortal(ClipboardComponent, null, this.creerInjector(message)));
-    componentRef.instance.etat = 'visible';
+    const componentRef = overlayRef.attach(new ComponentPortal(ClipboardComponent, null, this.creerInjector(config.message)));
+    componentRef.instance.etat = CLIPBOARDANIMATION.VISIBLE;
 
-    setTimeout(() => overlayRef.dispose(), 2000);
+    setTimeout(() => overlayRef.dispose(), config.duree * 1000);
   }
 
   /**
