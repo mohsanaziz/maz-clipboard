@@ -41,7 +41,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
             "scripts": []
@@ -59,7 +59,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -68,6 +67,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -105,7 +108,11 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json", "e2e/tsconfig.json"],
+            "tsConfig": [
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
+            ],
             "exclude": ["**/node_modules/**"]
           }
         },
@@ -134,6 +141,11 @@
           "options": {
             "tsConfig": "projects/maz/clipboard/tsconfig.lib.json",
             "project": "projects/maz/clipboard/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/maz/clipboard/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -147,7 +159,10 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["projects/maz/clipboard/tsconfig.lib.json", "projects/maz/clipboard/tsconfig.spec.json"],
+            "tsConfig": [
+              "projects/maz/clipboard/tsconfig.lib.json",
+              "projects/maz/clipboard/tsconfig.spec.json"
+            ],
             "exclude": ["**/node_modules/**"]
           }
         }
